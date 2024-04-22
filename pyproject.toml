@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "filtered-news-bot"
+version = "0.1.0"
+description = ""
+authors = ["Milana <94888u@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiogram = {extras = ["all"], version = "^3.4.1"}
+pydantic-settings = "^2.2.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
