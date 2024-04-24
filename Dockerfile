@@ -12,6 +12,8 @@ RUN python3.11 -m pip install --no-cache-dir poetry
 RUN poetry config virtualenvs.create false
 RUN poetry install --only=main --no-root # install dependencies
 
-COPY src .
+COPY src/ /src/
+
+ENV PYTHONPATH=/src
 
 CMD poetry run python telegram_bot/bot.py
