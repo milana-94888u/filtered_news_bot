@@ -3,10 +3,10 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    bot_username: str = Field()
-    http_api_token: str = Field()
+    username: str = Field()
+    api_token: str = Field()
 
-    model_config = SettingsConfigDict(env_prefix="TELEGRAM_")
+    model_config = SettingsConfigDict(env_prefix="TELEGRAM_BOT_")
 
 
 settings = Settings()
