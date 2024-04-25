@@ -1,0 +1,36 @@
+services:
+  postgresql-db:
+    container_name: postgresql_db
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres_data
+    networks:
+      - postgres_network
+
+  telegram-bot:
+    container_name: telegram_bot
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - SQL_DB_ENGINE=postgresql
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      - postgresql-db
+    networks:
+      - postgres_network
+
+volumes:
+  postgres_data:
+
+networks:
+  postgres_network:
