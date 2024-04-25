@@ -12,6 +12,7 @@ sqlalchemy = {extras = ["asyncio"], version = "^2.0.29"}
 aiogram = "^3.5.0"
 pattern = "^3.6.0"
 aiosqlite = "^0.20.0"
+telethon = "^1.35.0"
 
 [build-system]
 requires = ["poetry-core"]
