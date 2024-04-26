@@ -16,6 +16,26 @@ services:
       retries: 10
     stop_grace_period: 2m
 
+  rabbitmq-message-broker:
+    container_name: rabbitmq_message_broker
+    image: rabbitmq:3.9.29-management-alpine
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "15672:15672" # for management
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_data:/var/log/rabbitmq
+    networks:
+      - rabbitmq_network
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmqctl status"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+
   telegram-bot:
     container_name: telegram_bot
     restart: always
@@ -34,6 +54,8 @@ services:
 
 volumes:
   postgres_data:
+  rabbitmq_data:
 
 networks:
   postgres_network:
+  rabbitmq_network:
