@@ -20,7 +20,7 @@ class PostgresSettings(SqlEngineSettings):
     model_config = SettingsConfigDict(env_prefix="POSTGRES_")
 
     def get_url(self) -> str:
-        return f"postgresql+pg8000://{self.user}:{self.password}@localhost/{self.db}"
+        return f"postgresql+asyncpg://{self.user}:{self.password.get_secret_value()}@postgresql-db/{self.db}"
 
 
 class SqliteSettings(SqlEngineSettings):
