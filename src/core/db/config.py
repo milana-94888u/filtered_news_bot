@@ -16,11 +16,13 @@ class PostgresSettings(SqlEngineSettings):
     db: str
     user: str
     password: SecretStr
+    host: str
+    port: int
 
     model_config = SettingsConfigDict(env_prefix="POSTGRES_")
 
     def get_url(self) -> str:
-        return f"postgresql+asyncpg://{self.user}:{self.password.get_secret_value()}@postgresql-db/{self.db}"
+        return f"postgresql+asyncpg://{self.user}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.db}"
 
 
 class SqliteSettings(SqlEngineSettings):
