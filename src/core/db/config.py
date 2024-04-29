@@ -2,7 +2,7 @@ from typing import Literal
 from abc import abstractmethod
 from functools import cached_property
 
-from pydantic import SecretStr, FilePath
+from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -26,7 +26,7 @@ class PostgresSettings(SqlEngineSettings):
 
 
 class SqliteSettings(SqlEngineSettings):
-    file_path: FilePath
+    file_path: str
 
     model_config = SettingsConfigDict(env_prefix="SQLITE_")
 

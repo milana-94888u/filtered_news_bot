@@ -26,3 +26,4 @@ class NewsSource(BaseModel):
 class TelegramChannelSource(NewsSource):
     id: Mapped[int_primary_key] = mapped_column(ForeignKey(NewsSource.id))
     channel_handle: Mapped[str_with_length(50)]
+    last_post_id: Mapped[int]
