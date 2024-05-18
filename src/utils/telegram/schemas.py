@@ -6,6 +6,6 @@ class NewPostsRequest(BaseModel):
     last_post_id: int = 0
 
 
-class BaseNewPostData(BaseModel):
+class BasePostData(BaseModel):
     post_id: int
     text: str

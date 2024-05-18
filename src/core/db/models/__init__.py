@@ -1,11 +1,14 @@
 from .base import BaseModel
-from .news_source_models import NewsSource, TelegramChannelSource
-from .user_models import TelegramUser
+from .subscription_models import (
+    NewsSource,
+    PublicTelegramChannel,
+    TelegramUser,
+)
 
 
 __all__ = [
     "BaseModel",
     "NewsSource",
-    "TelegramChannelSource",
+    "PublicTelegramChannel",
     "TelegramUser",
 ]

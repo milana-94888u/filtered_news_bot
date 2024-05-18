@@ -19,9 +19,13 @@ from telegram_channel_reader.config import settings
 async def read_channels(client: TelegramClient) -> None:
     async with db_helper.session_factory() as session:
         session: AsyncSession
-        channels: list[TelegramChannelSource] = [
-            row[0]
-            for row in (await session.execute(select(TelegramChannelSource))).all()
+        select_all_statement = select(PublicTelegramChannel)
+        (await session.scalars(select_all_statement)).all()
+        channels: list[PublicTelegramChannel] = [
+            row
+            for row in (await session.execute(select(PublicTelegramChannel)))
+            .scalars()
+            .all()
         ]
         for channel in channels:
             await read_channel(client, channel.channel_handle, channel.last_post_id)
@@ -53,20 +57,20 @@ async def main():
 
 async def get_or_register_channel(
     handle: str, last_post_id: int
-) -> TelegramChannelSource:
+) -> PublicTelegramChannel:
     async with db_helper.session_factory() as session:
         session: AsyncSession
         result = (
             await session.execute(
-                select(TelegramChannelSource).where(
-                    TelegramChannelSource.channel_handle == handle
+                select(PublicTelegramChannel).where(
+                    PublicTelegramChannel.channel_handle == handle
                 )
             )
         ).one_or_none()
-        channel: TelegramChannelSource = result[0] if result else None
+        channel: PublicTelegramChannel = result[0] if result else None
         if channel is None:
-            channel = TelegramChannelSource(
-                source_type="TelegramChannelSource",
+            channel = PublicTelegramChannel(
+                source_type="PublicTelegramChannel",
                 channel_handle=handle,
                 last_post_id=last_post_id,
             )
